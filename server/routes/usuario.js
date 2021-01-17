@@ -3,12 +3,14 @@ const app = express();
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
+const { verificar_token, verificar_ADMIN_ROLE } = require('../middlewares/autenticacion');
 
 
 
 
 //GET
-app.get('/usuario', (req, res) => {
+app.get('/usuario', verificar_token, (req, res) => {
+
 
     let from = req.query.from || 0;
     let limit = req.query.limit || 5;
@@ -37,10 +39,8 @@ app.get('/usuario', (req, res) => {
 });
 
 
-
-
 //POST
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificar_token, verificar_ADMIN_ROLE], (req, res) => {
 
     let body = req.body;
 
@@ -69,7 +69,7 @@ app.post('/usuario', (req, res) => {
 
 
 //PUT
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificar_token, verificar_ADMIN_ROLE], (req, res) => {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'estado']);
@@ -96,7 +96,7 @@ app.put('/usuario/:id', (req, res) => {
 
 
 // DELETE
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificar_token, verificar_ADMIN_ROLE], (req, res) => {
 
     let id = req.params.id;
 

@@ -13,11 +13,8 @@ const app = express();
 //Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(require('./routes/usuario'));
+app.use(require('./routes/rutas')); //Configuracion de rutas usadas en la aplicacion
 
-
-
-//Routes
 
 
 
