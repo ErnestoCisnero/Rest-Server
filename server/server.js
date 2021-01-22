@@ -1,5 +1,6 @@
 //Global configuration file.....
 require('./config/config');
+const path = require('path');
 
 
 const express = require('express');
@@ -14,6 +15,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(require('./routes/rutas')); //Configuracion de rutas usadas en la aplicacion
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 
 
